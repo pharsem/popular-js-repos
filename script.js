@@ -53,7 +53,7 @@ function createTable(object) {
             '<td>' + (i+1) + '</td>' +
             '<td>' + object[i].name + '</td>' +
             '<td>' + object[i].owner.login + '</td>' +
-            '<td>' + object[i].description + '</td>' +
+            '<td>' + sanitise(object[i].description) + '</td>' +
             '<td>' + object[i].watchers + '</td>' +
             '<td>' + object[i].forks + '</td>' +
             '</tr>';
@@ -82,4 +82,9 @@ function createPagination(pages) {
 
     // Print the output variable
     document.getElementById("pagination").innerHTML = output;
+}
+
+// Function to sanitise strings, needed because some of the repo descriptions might contain HTML
+function sanitise(str) {
+    return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
 }
