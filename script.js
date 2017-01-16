@@ -1,4 +1,3 @@
-
 // AJAX request
 var request = new XMLHttpRequest();
 var url = "https://api.github.com/search/repositories?q=language:javascript&sort=stars&order=desc&per_page=100";
@@ -22,13 +21,64 @@ request.send();
 
 // Function to create the table
 function createTable(object) {
-    var out = "";
+    var output = '';
+    var pages = 0;
 
-    // Iterate through the result object, add each to the out variable
-    for(var i = 0; i < object.length; i++) {
-        out += '<p>' + (i+1) + ': ' + object[i].name + '</p>';
+    // Iterate through the result object, add each to the output variable
+    for (var i = 0; i < object.length; i++) {
+
+        // On every 20 iteration, but not the first one, input closing tag for table
+        if (i && (i % 20 === 0)) {
+            output += '</table>';
+        }
+
+        // On every 20 iteration, including the first one, start a new table
+        if (i % 20 === 0) {
+            output += '<table class="page" id="page' + (pages+1) + '">' +
+                '<tr>' +
+                '<th>#</th>' +
+                '<th>Repository name</th>' +
+                '<th>Owner</th>' +
+                '<th>Description</th>' +
+                '<th># Watchers</th>' +
+                '<th># Forks</th>' +
+                '</tr>';
+
+            // Increase pages counter
+            pages++;
+        }
+
+        // Add the information from the result to table rows
+        output += '<tr>' +
+            '<td>' + (i+1) + '</td>' +
+            '<td>' + object[i].name + '</td>' +
+            '<td>' + object[i].owner.login + '</td>' +
+            '<td>' + object[i].description + '</td>' +
+            '<td>' + object[i].watchers + '</td>' +
+            '<td>' + object[i].forks + '</td>' +
+            '</tr>';
     }
 
-    // Print the out variable
-    document.getElementById("table").innerHTML = out;
+    // Print the output variable
+    document.getElementById("table").innerHTML = output;
+
+    if (pages > 0) {
+        createPagination(pages);
+    };
+
+    // Make sure the first page is shown when results are loaded
+    window.location = "#page1";
+
+}
+
+function createPagination(pages) {
+
+    var output = '';
+
+    for (var i = 0; i < pages; i++) {
+        output += '<li><a href="#page' + (i+1) + '">' + (i+1) + '</a></li>';
+    }
+
+    // Print the output variable
+    document.getElementById("pagination").innerHTML = output;
 }
