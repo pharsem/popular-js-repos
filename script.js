@@ -66,7 +66,8 @@ function createTable(object) {
         createPagination(pages);
     };
 
-    // Make sure the first page is shown when results are loaded
+    // Remove loader and make sure the first page is shown when results are loaded
+    document.getElementById('loader').style.display = 'none';
     window.location = "#page1";
 
 }
