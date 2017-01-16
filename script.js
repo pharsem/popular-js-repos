@@ -51,8 +51,8 @@ function createTable(object) {
         // Add the information from the result to table rows
         output += '<tr>' +
             '<td>' + (i+1) + '</td>' +
-            '<td>' + object[i].name + '</td>' +
-            '<td>' + object[i].owner.login + '</td>' +
+            '<td><a href="' + object[i].html_url + '" target="_blank">' + object[i].name + '</a></td>' +
+            '<td><a href="' + object[i].owner.html_url + '" target="_blank">' + object[i].owner.login + '</a></td>' +
             '<td>' + sanitise(object[i].description) + '</td>' +
             '<td>' + object[i].watchers + '</td>' +
             '<td>' + object[i].forks + '</td>' +
