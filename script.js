@@ -93,22 +93,26 @@ function createPagination(pages) {
     document.getElementById("pagination").innerHTML = output;
 }
 
+// Toggle classes based on what page to show
 function changePage(page) {
     currentPage = page;
     var id = "page" + currentPage + "";
     var btnId = id + "btn";
 
+    // Hide all pages, then show the one that's selected
     var pages = document.getElementsByClassName("page");
     while(pages.length > 0) {
         pages[0].className = "hide";
     }
 
+    document.getElementById(id).className = "page show";
+
+    // Remove active class from all the pagination numbers, then add it to the one that's selected
     var numbers = document.getElementById("pagination").getElementsByTagName("li");
     for (var i = 0; i < numbers.length; ++i) {
         numbers[i].className = "";
     }
 
-    document.getElementById(id).className = "page show";
     document.getElementById(btnId).className = "active";
 }
 
