@@ -64,13 +64,16 @@ a:hover {
 #table {
     margin: auto;
     width: 80%;
-    border-radius: 10px;
-    background: rgba(255, 255, 255, 0.6);
+
 }
 
 table {
     border-collapse: collapse;
     width: 100%;
+}
+
+table tbody {
+    background: rgba(255, 255, 255, 0.6);
 }
 
 th, td {
@@ -97,7 +100,6 @@ tr:nth-child(even){background-color: rgba(255, 255, 255, 0.8);}
     float: left;
     padding: 8px 16px;
     text-decoration: none;
-    border-radius: 3px;
 }
 
 .active a {
