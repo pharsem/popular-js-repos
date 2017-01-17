@@ -1,3 +1,8 @@
+// Making sure the heading is still shown and not scrolled past when changing page
+window.addEventListener("hashchange", function () {
+    window.scrollTo(window.scrollX, window.scrollY - 200);
+});
+
 // AJAX request
 var request = new XMLHttpRequest();
 var url = "https://api.github.com/search/repositories?q=language:javascript&sort=stars&order=desc&per_page=100";
@@ -19,6 +24,8 @@ request.onreadystatechange = function () {
 request.open("GET", url, true);
 request.send();
 
+var currentPage = 1;
+
 // Function to create the table
 function createTable(object) {
     var output = '';
@@ -27,21 +34,21 @@ function createTable(object) {
     // Iterate through the result object, add each to the output variable
     for (var i = 0; i < object.length; i++) {
 
-        // On every 20 iteration, but not the first one, input closing tag for table
+        // On every 20th iteration, but not the first one, input closing tag for table
         if (i && (i % 20 === 0)) {
             output += '</table>';
         }
 
-        // On every 20 iteration, including the first one, start a new table
+        // On every 20th iteration, including the first one, start a new table
         if (i % 20 === 0) {
-            output += '<table class="page" id="page' + (pages+1) + '">' +
+            output += '<table class="page hide" id="page' + (pages+1) + '">' +
                 '<tr>' +
                 '<th>#</th>' +
                 '<th>Repository name</th>' +
                 '<th>Owner</th>' +
                 '<th>Description</th>' +
-                '<th># Watchers</th>' +
-                '<th># Forks</th>' +
+                '<th>Watchers</th>' +
+                '<th>Forks</th>' +
                 '</tr>';
 
             // Increase pages counter
@@ -66,25 +73,47 @@ function createTable(object) {
         createPagination(pages);
     };
 
-    // Remove loader and make sure the first page is shown when results are loaded
+    // When results are loaded, remove loader and display first page
     document.getElementById('loader').style.display = 'none';
-    window.location = "#page1";
+    changePage(currentPage);
 
 }
-
+// Create pagination system with buttons for each page
 function createPagination(pages) {
 
     var output = '';
 
     for (var i = 0; i < pages; i++) {
-        output += '<li><a href="#page' + (i+1) + '">' + (i+1) + '</a></li>';
+        var id = "page" + (i+1) + "btn";
+
+        output += '<li id="' + id + '"><a onclick="changePage(' + (i+1) + ')">' + (i+1) + '</a></li>';
     }
 
     // Print the output variable
     document.getElementById("pagination").innerHTML = output;
 }
 
+function changePage(page) {
+    currentPage = page;
+    var id = "page" + currentPage + "";
+    var btnId = id + "btn";
+
+    var pages = document.getElementsByClassName("page");
+    while(pages.length > 0) {
+        pages[0].className = "hide";
+    }
+
+    var numbers = document.getElementById("pagination").getElementsByTagName("li");
+    for (var i = 0; i < numbers.length; ++i) {
+        numbers[i].className = "";
+    }
+
+    document.getElementById(id).className = "page show";
+    document.getElementById(btnId).className = "active";
+}
+
 // Function to sanitise strings, needed because some of the repo descriptions might contain HTML
 function sanitise(str) {
     return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
 }
+

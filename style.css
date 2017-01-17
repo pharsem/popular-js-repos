@@ -1,12 +1,46 @@
+/* General stuff */
+html, body {
+    font-family: Arial, Helvetica, sans-serif;
+    width: 100%;
+    height: 100%;
+    background: #003e5b;
+    color: #000;
+    margin: 0;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    color: #ffffff;
+    text-align: center;
+}
+
+h1 {
+    font-size: 40px;
+}
+
+a {
+    color: #000;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+.center {
+    text-align: center;
+}
+
+
+/* Spinning loading wheel */
 #loader {
     position: absolute;
     left: 50%;
     top: 50%;
     z-index: 1;
     margin: -75px 0 0 -75px;
-    border: 16px solid #000;
+    border: 16px solid rgb(255, 255, 255);
     border-radius: 50%;
-    border-top: 16px solid rgba(91, 91, 91, 0.49);
+    border-top: 16px solid rgb(0, 62, 91);
     width: 100px;
     height: 100px;
     animation: spin 2s linear infinite;
@@ -17,10 +51,60 @@
     100% { transform: rotate(360deg); }
 }
 
-.page {
+/* Only display the table that's targeted with the anchor link */
+.hide {
     display: none;
 }
 
-.page:target {
+.show {
     display: block;
+}
+
+/* Style the table */
+#table {
+    margin: auto;
+    width: 80%;
+    border-radius: 10px;
+    background: rgba(255, 255, 255, 0.6);
+}
+
+table {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+th, td {
+    text-align: left;
+    padding: 10px;
+}
+
+tr:nth-child(even){background-color: rgba(255, 255, 255, 0.8);}
+
+
+/* Style the pagination */
+#pagination {
+    display: inline-block;
+    padding: 20px;
+    margin: 0;
+}
+
+#pagination li {
+    display: inline;
+}
+
+#pagination li a {
+    color: white;
+    float: left;
+    padding: 8px 16px;
+    text-decoration: none;
+    border-radius: 3px;
+}
+
+.active a {
+    background-color: rgba(255, 255, 255, 0.31);
+}
+
+#pagination li a:hover {
+    background-color: rgba(255, 255, 255, 0.31);
+    cursor: pointer;
 }
